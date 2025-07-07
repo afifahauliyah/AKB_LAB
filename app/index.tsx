@@ -31,10 +31,11 @@ const styles = StyleSheet.create({
   },
   nameBox: {
     backgroundColor: "#4caf50",
-    paddingVertical: 25,
+    paddingVertical: 30,
     paddingHorizontal: 30,
     borderRadius: 8,
     elevation: 3,
+    margin : 20
   },
   nameText: {
     fontSize: 30,
@@ -43,9 +44,10 @@ const styles = StyleSheet.create({
   },
   idContainer: {
     backgroundColor: "#3f51b5",
-    paddingVertical: 10,
+    paddingVertical: 20,
     paddingHorizontal: 30,
     borderRadius: 100,
+    margin: 20
   },
   idText: {
     fontSize: 16,

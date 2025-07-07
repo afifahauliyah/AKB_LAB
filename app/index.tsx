@@ -1,74 +1,66 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function Index() {
+export default function ProfileCard() {
+  const handlePress = () => {
+    alert("Selamat datang, pengguna!");
+  };
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#f0f0f0",
-        padding: 20,
-      }}
-    >
-      {/* 🔺 Segitiga oranye */}
-      <View
-        style={{
-          width: 0,
-          height: 0,
-          borderLeftWidth: 30,
-          borderRightWidth: 30,
-          borderBottomWidth: 50,
-          borderLeftColor: "transparent",
-          borderRightColor: "transparent",
-          borderBottomColor: "orange",
-          marginBottom: 20,
-        }}
-      />
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.nameBox} onPress={handlePress}>
+        <Text style={styles.nameText}>AFIFAH AULIYAH</Text>
+      </TouchableOpacity>
 
-      {/* 💊 Pill - Stambuk */}
-      <View
-        style={{
-          backgroundColor: "pink",
-          paddingHorizontal: 20,
-          paddingVertical: 8,
-          borderRadius: 50,
-          marginBottom: 20,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 20,
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          105841111022
-        </Text>
+      <View style={styles.idContainer}>
+        <Text style={styles.idText}>105841111022</Text>
       </View>
 
-      {/* ▭ Persegi Panjang - Nama */}
-      <View
-        style={{
-          backgroundColor: "red",
-          paddingHorizontal: 30,
-          paddingVertical: 15,
-          borderRadius: 8,
-          marginBottom: 20,
-        }}
-      >
-        <Text
-          style={{
-            color: "black",
-            fontWeight: "bold",
-            fontSize: 16,
-            textAlign: "center",
-          }}
-        >
-          AFIFAH AULIYAH
-        </Text>
-      </View>
+      <View style={styles.triangleShape} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#eef2f3",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    paddingVertical: 50,
+  },
+  nameBox: {
+    backgroundColor: "#4caf50",
+    paddingVertical: 25,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    elevation: 3,
+  },
+  nameText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  idContainer: {
+    backgroundColor: "#3f51b5",
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 100,
+  },
+  idText: {
+    fontSize: 16,
+    color: "#ffffff",
+  },
+  triangleShape: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 35,
+    borderRightWidth: 35,
+    borderBottomWidth: 55,
+    borderStyle: "solid",
+    backgroundColor: "transparent",
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#ff9800",
+  },
+});

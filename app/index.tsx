@@ -1,68 +1,108 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback,
+  ScrollView,
+  Animated,
+} from 'react-native';
 
-export default function ProfileCard() {
-  const handlePress = () => {
-    alert("Selamat datang, pengguna!");
+
+  const imageData = [
+  { id: 1, mainSrc: 'https://picsum.photos/id/10/200', altSrc: 'https://picsum.photos/id/11/200' },
+  { id: 2, mainSrc: 'https://picsum.photos/id/12/200', altSrc: 'https://picsum.photos/id/13/200' },
+  { id: 3, mainSrc: 'https://picsum.photos/id/14/200', altSrc: 'https://picsum.photos/id/15/200' },
+  { id: 4, mainSrc: 'https://picsum.photos/id/16/200', altSrc: 'https://picsum.photos/id/17/200' },
+  { id: 5, mainSrc: 'https://picsum.photos/id/18/200', altSrc: 'https://picsum.photos/id/19/200' },
+  { id: 6, mainSrc: 'https://picsum.photos/id/20/200', altSrc: 'https://picsum.photos/id/21/200' },
+  { id: 7, mainSrc: 'https://picsum.photos/id/22/200', altSrc: 'https://picsum.photos/id/23/200' },
+  { id: 8, mainSrc: 'https://picsum.photos/id/24/200', altSrc: 'https://picsum.photos/id/25/200' },
+  { id: 9, mainSrc: 'https://picsum.photos/id/26/200', altSrc: 'https://picsum.photos/id/27/200' },
+];
+
+
+
+
+export default function ImageGrid() {
+  const [images, setImages] = useState(
+    imageData.map(img => ({
+      ...img,
+      isFlipped: false,
+      scale: new Animated.Value(1),
+      scaleNum: 1,
+    }))
+  );
+
+  const handlePress = (id: number) => {
+    setImages(prevImages =>
+      prevImages.map(img => {
+        if (img.id === id) {
+          const newScaleNum = Math.min(img.scaleNum * 1.2, 2);
+          Animated.timing(img.scale, {
+            toValue: newScaleNum,
+            duration: 200,
+            useNativeDriver: true,
+          }).start();
+
+          return {
+            ...img,
+            isFlipped: !img.isFlipped,
+            scaleNum: newScaleNum,
+          };
+        }
+        return img;
+      })
+    );
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.nameBox} onPress={handlePress}>
-        <Text style={styles.nameText}>AFIFAH AULIYAH</Text>
-      </TouchableOpacity>
-
-      <View style={styles.idContainer}>
-        <Text style={styles.idText}>105841111022</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.grid}>
+        {images.map(img => (
+          <TouchableWithoutFeedback
+            key={img.id}
+            onPress={() => handlePress(img.id)}
+          >
+            <View style={styles.cell}>
+              <Animated.Image
+                source={{ uri: img.isFlipped ? img.altSrc : img.mainSrc }}
+                style={[
+                  styles.image,
+                  { transform: [{ scale: img.scale }] }
+                ]}
+                resizeMode="cover"
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        ))}
       </View>
-
-      <View style={styles.triangleShape} />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#eef2f3",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    paddingVertical: 50,
+    paddingVertical: 40,
+    alignItems: 'center',
   },
-  nameBox: {
-    backgroundColor: "#4caf50",
-    paddingVertical: 30,
-    paddingHorizontal: 30,
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: 330,
+    justifyContent: 'center',
+  },
+  cell: {
+    width: 100,
+    height: 100,
+    margin: 5,
+    backgroundColor: '#eee',
     borderRadius: 8,
-    elevation: 3,
-    margin : 20
+    overflow: 'hidden',
   },
-  nameText: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "#fff",
-  },
-  idContainer: {
-    backgroundColor: "#3f51b5",
-    paddingVertical: 20,
-    paddingHorizontal: 30,
-    borderRadius: 100,
-    margin: 20
-  },
-  idText: {
-    fontSize: 16,
-    color: "#ffffff",
-  },
-  triangleShape: {
-    width: 0,
-    height: 0,
-    borderLeftWidth: 35,
-    borderRightWidth: 35,
-    borderBottomWidth: 55,
-    borderStyle: "solid",
-    backgroundColor: "transparent",
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: "#ff9800",
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
   },
 });

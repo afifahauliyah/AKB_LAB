@@ -1,91 +1,54 @@
-import { ScrollView, StyleSheet, Text } from "react-native";
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { 
+  Ionicons, 
+  FontAwesome, 
+  MaterialIcons, 
+  Entypo, 
+  AntDesign, 
+  Feather, 
+  Octicons, 
+  Foundation, 
+  EvilIcons, 
+  MaterialCommunityIcons 
+} from '@expo/vector-icons';
 
-// 10 nama sesuai permintaan kamu
-const namesWithStambuk = [
-  // 5 sebelum aul(font statis)
-  "wa nanda sulystrian- 105841110622",
-  "MUH.TEGAR AL FIKRI - 105841110722",
-  "Rayhanatul jannah - 105841110822",
-  "Hanna maryam - 105841110922",
-  "Afifah Auliyah - 105841111022",
-
-  // Ray (kamu) + 4 sesudah (font variabel)
-  "Muh Fikri Maulana - 105841107622",
-  "Muhammad Hasraddin Hasnan - 105841107722",
-  "Muhammad Dzulfikar Hidayat - 105841107822",
-   "AHMAD YANI - 105841107922",
-  "Rosfika awalia - 105841108122",
-];
-
-// Font untuk 5 statis dan 5 variabel
-const staticFonts = [
- "LibreBaskerville",
-  "ManufacturingConsent",
-  "SpecialGothicExpandedOne",
-  "SpaceMono",
-  "WinkyRough",
-];
-
-const variableFonts = [
-  "Montserrat",       // aul
-  "PlayfairDisplay",
-  "RobotoItalic",
-  "Bungee",
-  "RedHatDisplay",
-];
-
-export default function Page() {
+const IconScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.sectionTitle}>5 nama sebelum (font statis):</Text>
-      {namesWithStambuk.slice(0, 5).map((item, idx) => (
-        <Text
-          key={idx}
-          style={[styles.name, { fontFamily: staticFonts[idx] }]}
-        >
-          {item}
-        </Text>
-      ))}
-
-      <Text style={styles.sectionTitle}>5 nama setelah (font variabel):</Text>
-      {namesWithStambuk.slice(5).map((item, idx) => (
-        <Text
-          key={idx + 5}
-          style={[
-            styles.name,
-            { fontFamily: variableFonts[idx] },
-            item.includes("Ray") && styles.highlight,
-          ]}
-        >
-          {item}
-        </Text>
-      ))}
+      <Text style={styles.title}>10 Ikon Berbeda</Text>
+      <View style={styles.iconRow}>
+        <Ionicons name="home" size={40} color="#4F8EF7" />
+        <FontAwesome name="user" size={40} color="#FF8C00" />
+        <MaterialIcons name="email" size={40} color="#32CD32" />
+        <Entypo name="chat" size={40} color="#FF1493" />
+        <AntDesign name="camera" size={40} color="#00CED1" />
+        <Feather name="cloud" size={40} color="#8A2BE2" />
+        <Octicons name="device-camera-video" size={40} color="#DC143C" />
+        <Foundation name="heart" size={40} color="#2E8B57" />
+        <EvilIcons name="location" size={40} color="#B22222" />
+        <MaterialCommunityIcons name="wifi" size={40} color="#00008B" />
+      </View>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 60,
-    paddingBottom: 100,
-    paddingHorizontal: 20,
-    alignItems: "center",
-    justifyContent: "center",
+    padding: 20,
+    alignItems: 'center',
   },
-  name: {
-    fontSize: 22,
-    marginVertical: 8,
-    textAlign: "center",
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: 'bold',
   },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 20,
-    marginBottom: 10,
-    color: "#555",
-  },
-  highlight: {
-    fontWeight: "bold",
-    color: "#1976D2", // Sorot warna biru untuk nama kamu (Ray)
+  iconRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 20,
   },
 });
+
+export default IconScreen;

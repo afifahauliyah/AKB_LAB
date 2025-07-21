@@ -4,18 +4,23 @@ import { Stack } from "expo-router";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
-// Cegah splash screen hilang otomatis
+// Cegah splash screen otomatis hilang
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [isReady, setIsReady] = useState(false);
 
-  const fonts = {
+  // Font statis (5)
+  const staticFonts = {
     LibreBaskerville: require("../assets/fonts/LibreBaskerville-static.ttf"),
     ManufacturingConsent: require("../assets/fonts/ManufacturingConsent-static.ttf"),
     SpecialGothicExpandedOne: require("../assets/fonts/SpecialGothicExpandedOne-static.ttf"),
     SpaceMono: require("../assets/fonts/SpaceMono-static.ttf"),
     WinkyRough: require("../assets/fonts/WinkyRough-static.ttf"),
+  };
+
+  // Font variabel (5)
+  const variableFonts = {
     Montserrat: require("../assets/fonts/Montserrat-VariableFont_wght.ttf"),
     PlayfairDisplay: require("../assets/fonts/PlayfairDisplay-VariableFont_wght.ttf"),
     RobotoItalic: require("../assets/fonts/RobotoItalic-VariableFont,wght.ttf"),
@@ -23,18 +28,20 @@ export default function RootLayout() {
     RedHatDisplay: require("../assets/fonts/RedHatDisplay-Italic-VariableFont_wght.ttf"),
   };
 
-  const loadResources = useCallback(async () => {
+  const allFonts = { ...staticFonts, ...variableFonts };
+
+  const loadFonts = useCallback(async () => {
     try {
-      await Font.loadAsync(fonts);
+      await Font.loadAsync(allFonts);
       setIsReady(true);
-    } catch (e) {
-      console.error("Error loading fonts:", e);
+    } catch (err) {
+      console.error("Error loading fonts:", err);
     }
   }, []);
 
   useEffect(() => {
-    loadResources();
-  }, [loadResources]);
+    loadFonts();
+  }, [loadFonts]);
 
   useEffect(() => {
     if (isReady) SplashScreen.hideAsync();
@@ -48,29 +55,49 @@ export default function RootLayout() {
     );
   }
 
-  const fontNames = Object.keys(fonts);
-  const fontSizes = [20, 22, 24, 26, 21, 23, 19, 25, 18, 22]; // variasi ukuran font
+  const staticFontNames = Object.keys(staticFonts);
+  const variableFontNames = Object.keys(variableFonts);
+
+  const fontSizes = [22, 24, 20, 26, 23, 25, 21, 19, 22, 20];
 
   return (
     <>
       <View style={styles.container}>
-        {/* Judul */}
         <Text style={styles.headerText}>Font yang Digunakan:</Text>
 
-        {/* Daftar font horizontal */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.horizontalList}
         >
-          {fontNames.map((font, index) => (
+          {/* Label untuk font statis */}
+          <Text style={styles.label}>📌 Font Statis:</Text>
+
+          {staticFontNames.map((font, index) => (
             <Text
               key={font}
               style={{
                 fontFamily: font,
-                fontSize: fontSizes[index % fontSizes.length],
+                fontSize: fontSizes[index],
                 marginHorizontal: 12,
-                color: "#333",
+                color: "#222",
+              }}
+            >
+              {font}
+            </Text>
+          ))}
+
+          {/* Label untuk font variabel */}
+          <Text style={styles.label}>📌 Font Variabel:</Text>
+
+          {variableFontNames.map((font, index) => (
+            <Text
+              key={font}
+              style={{
+                fontFamily: font,
+                fontSize: fontSizes[index + staticFontNames.length],
+                marginHorizontal: 12,
+                color: "#222",
               }}
             >
               {font}
@@ -86,7 +113,7 @@ export default function RootLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F0F0F0",
+    backgroundColor: "#F8F8F8",
     paddingTop: 40,
     paddingBottom: 10,
   },
@@ -94,12 +121,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 10,
-    color: "#555",
+    marginBottom: 12,
+    color: "#444",
   },
   horizontalList: {
     paddingHorizontal: 16,
     alignItems: "center",
+    flexDirection: "row",
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginHorizontal: 8,
+    color: "#555",
   },
   loadingScreen: {
     flex: 1,

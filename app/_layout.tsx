@@ -1,25 +1,34 @@
+import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
-import * as splashscreen from "expo-splash-screen";
+import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
-splashscreen.preventAutoHideAsync(); // melarang untuk menutup touchscreennya secara otomatis
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    "winkyrough-regular": 
-    require("../assets/fonts/WinkyRough-Regular.ttf"), // Memuat font kustom
+  const [fontsLoaded] = useFonts({
+    // 🧷 5 Font Statis
+    "LibreBaskerville": require("../assets/fonts/LibreBaskerville-static.ttf"),
+    "ManufacturingConsent": require("../assets/fonts/ManufacturingConsent-static.ttf"),
+    "SpecialGothicExpandedOne": require("../assets/fonts/SpecialGothicExpandedOne-static.ttf"),
+    "SpaceMono": require("../assets/fonts/SpaceMono-static.ttf"),
+    "WinkyRough": require("../assets/fonts/WinkyRough-static.ttf"),
+
+    // 🧷 5 Variable Fonts
+    "Montserrat": require("../assets/fonts/Montserrat-VariableFont_wght.ttf"),
+    "PlayfairDisplay": require("../assets/fonts/PlayfairDisplay-VariableFont_wght.ttf"),
+    "RobotoItalic": require("../assets/fonts/RobotoItalic-VariableFont,wght.ttf"),
+    "Bungee": require("../assets/fonts/Bungee-Regular.ttf"),
+    "RedHatDisplay": require("../assets/fonts/RedHatDisplay-Italic-VariableFont_wght.ttf"),
   });
 
   useEffect(() => {
-    if (loaded && error == null) {
-      SplashScreen.hideAsync(); // Mmenyembunyikan splash screen 
-    } 
-  }, [loaded,error]);
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
-  if (!loaded && error) {
-    return null; // Menampilkan null jika font belum dimuat
-  }
+  if (!fontsLoaded) return null;
+
   return <Stack />;
-
 }

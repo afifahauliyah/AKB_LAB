@@ -19,19 +19,19 @@ const namesWithStambuk = [
 
 // Font untuk 5 statis dan 5 variabel
 const staticFonts = [
- "AbrilFatface",
-  "Lobster",
-  "Pacifico",
-  "PlayfairDisplay",
-  "RalewayDots",
+ "LibreBaskerville",
+  "ManufacturingConsent",
+  "SpecialGothicExpandedOne",
+  "SpaceMono",
+  "WinkyRough",
 ];
 
 const variableFonts = [
-  "Bitcount",       // aul
-  "Manrope",
-  "Quicksand",
-  "SmoochSans",
-  "JosefinSlab",
+  "Montserrat",       // aul
+  "PlayfairDisplay",
+  "RobotoItalic",
+  "Bungee",
+  "RedHatDisplay",
 ];
 
 export default function Page() {
